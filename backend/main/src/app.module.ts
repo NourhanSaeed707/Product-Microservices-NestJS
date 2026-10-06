@@ -5,7 +5,10 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost/nest'),
+    MongooseModule.forRoot('mongodb://localhost:27017/nest_main', {
+      autoCreate: true,
+    }
+    ),
   ],
   controllers: [AppController],
   providers: [AppService],
