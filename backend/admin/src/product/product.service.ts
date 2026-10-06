@@ -30,4 +30,12 @@ export class ProductService {
         Object.assign(existingProduct, product);
         return await this.productRepository.save(existingProduct);
     }
+
+    async delete(id: number): Promise<void> {
+        const existingProduct = await this.productRepository.findOneBy({ id });
+        if (!existingProduct) {
+            throw new NotFoundException(`Product with id ${id} not found`);
+        }
+        this.productRepository.delete
+    }
 }
