@@ -8,4 +8,8 @@ export class ProductService {
     constructor(
          @InjectModel(Product.name) private readonly productModel: Model<ProductDocument>
     ) { }
+
+    async all() {
+        return this.productModel.find().exec();
+    }
 }
