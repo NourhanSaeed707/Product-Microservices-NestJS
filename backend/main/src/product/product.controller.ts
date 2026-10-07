@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post } from '@nestjs/common';
+import { Controller, Get, Param, ParseIntPipe, Post } from '@nestjs/common';
 import { ProductService } from './product.service.js';
 import { EventPattern } from '@nestjs/microservices';
 import { Product } from './product.model.js';
@@ -17,11 +17,13 @@ export class ProductController {
     }
 
     @Post(':id/like')
-    async likeProduct(@Param('id') id: number): Promise<Product | null> {
+    async likeProduct(@Param('id', ParseIntPipe) id: number): Promise<Product | null> {
         const product = await this.productService.findOne(id);
-        await firstValueFrom(this.httpService.post(`http://localhost:8001/api/products/${id}/like`, {}));
+        this.httpService.post(`http://localhost:8001/api/products/${id}/like`, {});
         if (product) {
-            return this.productService.update(id, { ...product, likes: product.likes + 1 });
+            return this.productService.update(id, {
+                likes: product.likes + 1
+            });
         }
         return product;
     }

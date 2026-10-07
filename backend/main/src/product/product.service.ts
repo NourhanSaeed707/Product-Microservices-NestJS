@@ -21,8 +21,17 @@ export class ProductService {
         return this.productModel.findOne({ id }).exec();
     }
 
-    async update(id: number, product: Product): Promise<Product | null> {
-        return this.productModel.findOneAndUpdate({ id }, product, { new: true }).exec();
+    async update(
+        id: number,
+        product: Partial<Product>
+    ): Promise<Product | null> {
+        return this.productModel
+            .findOneAndUpdate(
+                { id },
+                product,
+                { new: true }
+            )
+            .exec();
     }
 
     async delete(id: number): Promise<Product | null> {
