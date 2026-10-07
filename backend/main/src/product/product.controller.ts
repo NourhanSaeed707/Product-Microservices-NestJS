@@ -18,13 +18,13 @@ export class ProductController {
     }
 
     @EventPattern('product_updated')
-    async handleProductUpdated(data: any) {
-        this.productService.create(data);
+    async handleProductUpdated(product: any) {
+        this.productService.update(product.id, product);
     }
 
     @EventPattern('product_deleted')
-    async handleProductDeleted(data: any) {
-        this.productService.create(data);
+    async handleProductDeleted(id: number) {
+        this.productService.delete(id);
     }
 
 }
