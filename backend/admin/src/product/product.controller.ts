@@ -6,19 +6,20 @@ import { ClientProxy } from '@nestjs/microservices';
 
 @Controller('products')
 export class ProductController {
-    constructor(private readonly productService: ProductService, 
+    constructor(private readonly productService: ProductService,
         @Inject('PRODUCT_SERVICE') private readonly client: ClientProxy
-    ) {}
+    ) { }
 
     @Get()
     async all() {
-        this.client.emit('product_created', 'Product created event emitted');
         return await this.productService.all();
     }
 
     @Post()
-    async create(@Body() product: ProductDTO) { 
-        return await this.productService.create(product); 
+    async create(@Body() product: ProductDTO): Promise<Product | null> {
+        const productRes = await this.productService.create(product);
+        this.client.emit('product_created', productRes);
+        return productRes;
     }
 
     @Get(':id')
@@ -28,11 +29,14 @@ export class ProductController {
 
     @Put(':id')
     async update(@Param('id') id: number, @Body() product: ProductDTO): Promise<Product | null> {
-        return await this.productService.update(id, product);
+        const productUpdated = await this.productService.update(id, product);
+        this.client.emit('product_updated', productUpdated);
+        return productUpdated;
     }
 
     @Delete(':id')
     async delete(@Param('id') id: number): Promise<void> {
-        return await this.productService.delete(id);
+        await this.productService.delete(id);
+        this.client.emit('product_deleted', id);
     }
 }
