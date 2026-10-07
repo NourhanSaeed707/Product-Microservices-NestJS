@@ -3,26 +3,13 @@ import { AppModule } from './app.module.js';
 import { Transport } from '@nestjs/microservices';
 
 async function bootstrap() {
-  // const app = await NestFactory.create(AppModule);
-  // app.setGlobalPrefix('api');
-  // app.enableCors({
-  //   origin: 'http://localhost:3000',
-  //   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  // });
-  // await app.listen(process.env.PORT ?? 8001);
-
-  const app = await NestFactory.createMicroservice(AppModule, {
-    transport: Transport.RMQ,
-    options: {
-      urls: ['amqps://zkqnpgqd:j61ZrakMoR9oov195YDgLBfJGcJ7Z5iA@fuji.lmq.cloudamqp.com/zkqnpgqd'],
-      queue: 'main_queue',
-      queueOptions: {
-        durable: false
-      },
-    },
+  const app = await NestFactory.create(AppModule);
+  app.setGlobalPrefix('api');
+  app.enableCors({
+    origin: 'http://localhost:3000',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   });
+  await app.listen(process.env.PORT ?? 8001);
 
-  await app.listen();
-  console.log('Microservice is listening');
 }
 await bootstrap();
