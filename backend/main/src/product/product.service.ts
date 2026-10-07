@@ -6,10 +6,14 @@ import { InjectModel } from '@nestjs/mongoose';
 @Injectable()
 export class ProductService {
     constructor(
-         @InjectModel(Product.name) private readonly productModel: Model<ProductDocument>
+        @InjectModel(Product.name) private readonly productModel: Model<ProductDocument>
     ) { }
 
-    async all() {
-        return this.productModel.find().exec();
+    async all(): Promise<Product[]> {
+        return await this.productModel.find().exec();
+    }
+
+    async create(product: Product): Promise<Product | null> {
+        return this.productModel.create(product);
     }
 }
