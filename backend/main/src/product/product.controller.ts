@@ -11,7 +11,7 @@ export class ProductController {
         return this.productService.all();
     }
 
-    @EventPattern('product.created')
+    @EventPattern('product_created')
     async handleProductCreated(data: any) {
         console.log('Product created event received:', data);
         // Handle the product created event, e.g., update the database or perform other actions
