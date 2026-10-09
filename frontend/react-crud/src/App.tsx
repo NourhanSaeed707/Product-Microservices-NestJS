@@ -2,6 +2,7 @@ import React from 'react';
 import Nav from './components/Nav';
 import Menu from './components/Menu';
 import Products from './admin/Products';
+import {Route, Routes} from 'react-router-dom';
 
 function App() {
   return (
@@ -17,8 +18,9 @@ function App() {
           <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
             <h1 className="h2">Dashboard</h1>
           </div>
-
-          <Products />
+          <Routes>
+            <Route path="/admin/products" element={<Products />} />
+          </Routes>
         </main>
       </div>
     </div>
