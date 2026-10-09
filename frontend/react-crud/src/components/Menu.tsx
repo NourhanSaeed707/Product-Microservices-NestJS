@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Menu = () => {
     return (
@@ -6,9 +7,9 @@ const Menu = () => {
             <nav className="pt-3">
                 <ul className="nav flex-column">
                     <li className="nav-item">
-                        <a className="nav-link active" href="/" aria-current="page">
+                        <Link className="nav-link active" to="/admin/products" aria-current="page">
                             Products
-                        </a>
+                        </Link>
                     </li>
                 </ul>
             </nav>
