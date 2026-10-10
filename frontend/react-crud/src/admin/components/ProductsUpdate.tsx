@@ -1,11 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Wrapper from '../Wrapper';
 import { useNavigate } from 'react-router-dom';
+import { Product } from '../../interfaces/product';
 
-const ProductsUpdate = () => {
+const ProductsUpdate = (props: { productId: number }) => {
     const [title, setTitle] = useState("");
     const [image, setImage] = useState("");
     const navigate = useNavigate();
+
+    useEffect(() => {
+        (
+            async () => {
+                const response = await fetch(`http://localhost:8000/api/products/${props.productId}`, {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                const product: Product = await response.json();
+                setTitle(product.title);
+                setImage(product.image);
+            }
+        )()
+    }, []);
 
     const submit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
         e.preventDefault();
