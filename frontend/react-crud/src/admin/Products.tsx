@@ -1,7 +1,19 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Wrapper from './Wrapper';
 
 const Products = () => {
+    const [products, setProducts] = useState([]);
+    useEffect(() => {
+        (
+            async () => {
+                const response = await fetch('http://localhost:8000/api/products');
+                const data = await response.json();
+                setProducts(data);
+            }
+        )();
+
+    }, []);
+
     return (
         <Wrapper>
             <div>
