@@ -13,7 +13,7 @@ const Main = () => {
             }
         )()
     }, []);
-    
+
     return (
         <div>
             <main>
@@ -22,7 +22,7 @@ const Main = () => {
                             <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                                 {
                                     products.map((product: Product) => {
-                                        return (
+                                        return (                                   
                                             <div className="col" key={product.id}>
                                                 <div className="card shadow-sm">
                                                     <img src={product.image} alt={product.title} className="card-img-top" style={{ height: '200px', objectFit: 'cover' }} />
@@ -34,7 +34,7 @@ const Main = () => {
                                                                 <button type="button" className="btn btn-sm btn-outline-secondary">View</button>
                                                                 <button type="button" className="btn btn-sm btn-outline-secondary">Edit</button>
                                                             </div>
-                                                            <small className="text-muted">9 mins</small>
+                                                            <small className="text-muted">{product.likes} likes</small>
                                                         </div>
                                                     </div>
                                                 </div>
