@@ -43,7 +43,7 @@ const Products = () => {
                                             </td>
                                             <td>{product.likes}</td>
                                             <td>
-                                                <button className="btn btn-sm btn-outline-secondary">Edit</button>
+                                                <button className="btn btn-sm btn-outline-secondary me-2">Edit</button>
                                                 <button className="btn btn-sm btn-outline-danger">Delete</button>
                                             </td>
                                         </tr>
