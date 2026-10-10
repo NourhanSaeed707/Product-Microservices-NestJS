@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Product } from '../interfaces/product';
 
 const Main = () => {
-    const[products, setProducts] = useState([]);
+    const [products, setProducts] = useState<Product[]>([]);
     useEffect(() => {
         (
             async () => {
@@ -13,6 +13,21 @@ const Main = () => {
             }
         )()
     }, []);
+
+    const like = async (id: number) => {
+        await fetch(`http://localhost:8001/api/products/${id}/like`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        });
+        setProducts((currentProducts: Product[]) =>
+            currentProducts.map((product: Product) => {
+                if (product.id === id) {
+                    return { ...product, likes: product.likes + 1 };
+                }
+                return product;
+            })
+        );
+    };
 
     return (
         <div>
@@ -31,8 +46,7 @@ const Main = () => {
                                                         <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                                                         <div className="d-flex justify-content-between align-items-center">
                                                             <div className="btn-group">
-                                                                <button type="button" className="btn btn-sm btn-outline-secondary">View</button>
-                                                                <button type="button" className="btn btn-sm btn-outline-secondary">Edit</button>
+                                                                <button type="button" className="btn btn-sm btn-outline-secondary" onClick={() => { like(product.id) }}>Like</button>
                                                             </div>
                                                             <small className="text-muted">{product.likes} likes</small>
                                                         </div>
