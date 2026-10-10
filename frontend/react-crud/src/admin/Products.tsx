@@ -13,8 +13,15 @@ const Products = () => {
                 setProducts(data);
             }
         )();
-
     }, []);
+
+    const deleteProduct = async (id: number) => {
+        await fetch(`http://localhost:8000/api/products/${id}`, {
+            method: 'DELETE'
+        });
+        // Remove the deleted product from the state
+        setProducts(products.filter(product => product.id !== id));
+    };
 
     return (
         <Wrapper>
@@ -44,7 +51,7 @@ const Products = () => {
                                             <td>{product.likes}</td>
                                             <td>
                                                 <button className="btn btn-sm btn-outline-secondary me-2">Edit</button>
-                                                <button className="btn btn-sm btn-outline-danger">Delete</button>
+                                                <button className="btn btn-sm btn-outline-danger" onClick={() => deleteProduct(product.id)}>Delete</button>
                                             </td>
                                         </tr>
                                     )
