@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Wrapper from './Wrapper';
 import { Product } from '../interfaces/product';
+import { Link } from 'react-router-dom';
 
 const Products = () => {
     const [products, setProducts] = useState<Product[]>([]);
@@ -9,22 +10,31 @@ const Products = () => {
             async () => {
                 const response = await fetch('http://localhost:8000/api/products');
                 const data = await response.json();
-                console.log("data:" ,data);
+                console.log("data:", data);
                 setProducts(data);
             }
         )();
     }, []);
 
     const deleteProduct = async (id: number) => {
-        await fetch(`http://localhost:8000/api/products/${id}`, {
-            method: 'DELETE'
-        });
-        // Remove the deleted product from the state
-        setProducts(products.filter(product => product.id !== id));
+        if (window.confirm("Are you sure you want to delete this product ? ")) {
+            await fetch(`http://localhost:8000/api/products/${id}`, {
+                method: 'DELETE'
+            });
+            // Remove the deleted product from the state
+            setProducts(products.filter(product => product.id !== id));
+        }
     };
 
     return (
         <Wrapper>
+            <div className="pt-3 pb-2 mb-3 border-bottom">
+                <div>
+                    <Link to="/admin/product/create" className="btn btn-sm btn-outline-primary">
+                        Create Product
+                    </Link >
+                </div>
+            </div>
             <div>
                 <h2>Section title</h2>
                 <div className="table-responsive small">
@@ -46,7 +56,7 @@ const Products = () => {
                                             <th scope="row">{product.id}</th>
                                             <td>{product.title}</td>
                                             <td>
-                                                <img src={product.image} alt={product.title} height= "180"className="img-thumbnail" />
+                                                <img src={product.image} alt={product.title} height="180" className="img-thumbnail" />
                                             </td>
                                             <td>{product.likes}</td>
                                             <td>
