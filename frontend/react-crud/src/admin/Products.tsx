@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import Wrapper from './Wrapper';
 import { Product } from '../interfaces/product';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Products = () => {
     const [products, setProducts] = useState<Product[]>([]);
+    const navigate = useNavigate();
+
     useEffect(() => {
         (
             async () => {
@@ -60,8 +62,12 @@ const Products = () => {
                                             </td>
                                             <td>{product.likes}</td>
                                             <td>
-                                                <button className="btn btn-sm btn-outline-secondary me-2">Edit</button>
-                                                <button className="btn btn-sm btn-outline-danger" onClick={() => deleteProduct(product.id)}>Delete</button>
+                                                <button className="btn btn-sm btn-outline-secondary me-2" onClick={() => navigate(`/admin/product/${product.id}/edit`)}>
+                                                    Edit
+                                                </button>
+                                                <button className="btn btn-sm btn-outline-danger" onClick={() => deleteProduct(product.id)}>
+                                                    Delete
+                                                </button>
                                             </td>
                                         </tr>
                                     )
