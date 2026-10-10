@@ -58,7 +58,12 @@ const Products = () => {
                                             <th scope="row">{product.id}</th>
                                             <td>{product.title}</td>
                                             <td>
-                                                <img src={product.image} alt={product.title} height="180" className="img-thumbnail" />
+                                                <img
+                                                    src={product.image}
+                                                    alt={product.title}
+                                                    className="img-thumbnail"
+                                                    style={{ width: '60px', height: '60px', objectFit: 'cover' }}
+                                                />
                                             </td>
                                             <td>{product.likes}</td>
                                             <td>

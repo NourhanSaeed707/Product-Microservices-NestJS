@@ -13,7 +13,7 @@ const ProductsUpdate = () => {
         (
             async () => {
                 const response = await fetch(`http://localhost:8000/api/products/${id}`, {
-                    method: 'GET',
+                    method: 'PUT',
                     headers: { 'Content-Type': 'application/json' }
                 });
                 const product: Product = await response.json();
@@ -26,8 +26,8 @@ const ProductsUpdate = () => {
     const submit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log({ title, image });
-        await fetch('http://localhost:8000/api/products', {
-            method: 'POST',
+        await fetch(`http://localhost:8000/api/products/${id}`, {
+            method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 title,
